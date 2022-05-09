@@ -1,0 +1,174 @@
+%% For double-blind review submission, w/o CCS and ACM Reference (max submission space)
+% \documentclass[acmsmall,review]{acmart}\settopmatter{printfolios=true,printccs=false,printacmref=false}
+%% For double-blind review submission, w/ CCS and ACM Reference
+%\documentclass[acmsmall,review,anonymous]{acmart}\settopmatter{printfolios=true}
+%% For single-blind review submission, w/o CCS and ACM Reference (max submission space)
+%\documentclass[acmsmall,review]{acmart}\settopmatter{printfolios=true,printccs=false,printacmref=false}
+%% For single-blind review submission, w/ CCS and ACM Reference
+%\documentclass[acmsmall,review]{acmart}\settopmatter{printfolios=true}
+%% For final camera-ready submission, w/ required CCS and ACM Reference
+%\documentclass[acmsmall]{acmart}\settopmatter{}
+
+%for 592 report purpose
+\documentclass[sigplan]{acmart}\settopmatter{printfolios=false,printccs=false,printacmref=false}
+
+%% Journal information
+%% Supplied to authors by publisher for camera-ready submission;
+%% use defaults for review submission.
+\acmJournal{PACMPL}
+\acmVolume{1}
+\acmNumber{CONF} % CONF = POPL or ICFP or OOPSLA
+\acmArticle{1}
+\acmYear{2021}
+\acmMonth{1}
+\acmDOI{} % \acmDOI{10.1145/nnnnnnn.nnnnnnn}
+\startPage{1}
+
+%% Copyright information
+%% Supplied to authors (based on authors' rights management selection;
+%% see authors.acm.org) by publisher for camera-ready submission;
+%% use 'none' for review submission.
+\setcopyright{none}
+%\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\copyrightyear{2018}           %% If different from \acmYear
+
+%% Bibliography style
+\bibliographystyle{ACM-Reference-Format}
+%% Citation style
+%% Note: author/year citations are required for papers published as an
+%% issue of PACMPL.
+\citestyle{acmauthoryear}   %% For author/year citations
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Note: Authors migrating a paper from PACMPL format to traditional
+%% SIGPLAN proceedings format must update the '\documentclass' and
+%% topmatter commands above; see 'acmart-sigplanproc-template.tex'.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{booktabs}   %% For formal tables:
+                        %% http://ctan.org/pkg/booktabs
+\usepackage{subcaption} %% For complex figures with subfigures/subcaptions
+                        %% http://ctan.org/pkg/subcaption
+%\usepackage{bcprules}
+% \usepackage{parskip}
+
+\usepackage[compact]{titlesec}
+\usepackage[scaled=0.8]{beramono}
+\usepackage{listings,array,varwidth}
+\usepackage{mathpartir}
+\def \TirNameStyle #1{\inflabel{#1}} %set mathpartir's rule labels to our style
+\usepackage{mathtools}
+\usepackage{makecell}
+\usepackage{diagbox}
+\usepackage{float}
+\usepackage{varioref}
+\usepackage{xfrac}
+\usepackage{xcolor}
+%\renewcommand{\ttdefault}{pcr} % an alternative for bold tt fonts, if luximono doesn't work
+\usepackage{enumitem}
+\usepackage[skip=2.5pt]{caption}
+\usepackage{slashbox}
+\usepackage{cleveref}
+\usepackage{tikz}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{lipsum}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{xspace}
+\usepackage{mdframed}
+\usepackage[normalem]{ulem}
+\usepackage{cancel}
+\usepackage{scalerel}
+\usepackage[export]{adjustbox}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
+
+\usepackage{xcolor}
+\lstset{escapeinside={<@}{@>}}
+
+\input{macros/dot_macros}
+\input{macros/macros}
+\input{macros/intv_macros}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+%custom skip amount for line breaks in arrays
+\newlength{\myskip}
+\setlength{\myskip}{.5ex}
+
+
+
+% \usepackage{amssymb}
+% \newcommand\mydots{\ifmmode\ldots\else\makebox[1em][c]{.\hfil.}\fi}
+
+
+
+
+
+
+\begin{document}
+
+
+
+\title{Syntactic Qualifier Report}
+
+\author{Siyuan He}
+\affiliation{
+  \institution{Purdue University}           %% \institution is required
+  \country{USA}                   %% \country is recommended
+}
+\email{he662@purdue.edu}
+
+% \author{Oliver Bra\v{c}evac}
+% \affiliation{
+%   \institution{Purdue University}           %% \institution is required
+%   \country{USA}                   %% \country is recommended
+% }
+% \email{bracevac@purdue.edu}
+
+% \author{Tiark Rompf}
+% \affiliation{
+%   \institution{Purdue University}           %% \institution is required
+%   \country{USA}                   %% \country is recommended
+% }
+% \email{tiark@purdue.edu}
+
+\lstMakeShortInline[keywordstyle=,%
+                    flexiblecolumns=false,%
+                    language=Scala,
+                    basewidth={0.56em, 0.52em},%
+                    mathescape=false,%
+                    basicstyle=\ttfamily]@
+                    
+                    
+\begin{abstract}
+    Syntactic qualifier is an implementation of the reachability tracking qualifier in \langstar system based on the idea of intersection and union types. The syntactic qualifier is constructed from a set of axiomatic rules, where the properties of qualifiers are proved from the basic rules. We expect the syntactic qualifier to substitute for the original set qualifier to solve the potential problem on the unclear expressive power. We have achieved several milestones on the syntactic qualifier including opening, sub-qualifier relation, weakening, and equivalence. However, we stuck on the substitution lemma due to the lack of distributive law in the intersection and union types. 
+
+    
+\end{abstract}
+
+
+\maketitle
+
+
+\input{introduction}
+\input{overview}
+\input{progress}
+% \input{type-rule}
+% \input{related-work}
+\input{discussion}
+\input{nextstep}
+
+% \input{type-example}
+
+
+
+\bibliography{references}
+
+% \input{appendix}
+
+\end{document}

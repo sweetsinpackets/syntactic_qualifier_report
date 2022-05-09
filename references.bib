@@ -1,0 +1,218 @@
+
+@inproceedings{must-reachability,
+author = {Siyuan He},
+title = {Must-reachability Tracking Report},
+year = {2021}
+}
+
+@techreport{intersection-union-types,
+  title={Intersection and union types},
+  author={Pierce, Benjamin C},
+  year={1990},
+  institution={Citeseer}
+}
+
+
+@article{10.1145/2692956.2663188,
+author = {Matsakis, Nicholas D. and Klock, Felix S.},
+title = {The Rust Language},
+year = {2014},
+issue_date = {December 2014},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {34},
+number = {3},
+issn = {1094-3641},
+url = {https://doi.org/10.1145/2692956.2663188},
+doi = {10.1145/2692956.2663188},
+abstract = {Rust is a new programming language for developing reliable and efficient systems. It is designed to support concurrency and parallelism in building applications and libraries that take full advantage of modern hardware. Rust's static type system is safe1 and expressive and provides strong guarantees about isolation, concurrency, and memory safety.Rust also offers a clear performance model, making it easier to predict and reason about program efficiency. One important way it accomplishes this is by allowing fine-grained control over memory representations, with direct support for stack allocation and contiguous record storage. The language balances such controls with the absolute requirement for safety: Rust's type system and runtime guarantee the absence of data races, buffer overflows, stack overflows, and accesses to uninitialized or deallocated memory.},
+journal = {Ada Lett.},
+month = {oct},
+pages = {103–104},
+numpages = {2},
+keywords = {rust, systems programming, affine type systems, memory management}
+}
+
+
+@inproceedings{rust-paper,
+author = {Matsakis, Nicholas D. and Klock, Felix S.},
+title = {The Rust Language},
+year = {2014},
+isbn = {9781450332170},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2663171.2663188},
+doi = {10.1145/2663171.2663188},
+abstract = {Rust is a new programming language for developing reliable and efficient systems. It is designed to support concurrency and parallelism in building applications and libraries that take full advantage of modern hardware. Rust's static type system is safe1 and expressive and provides strong guarantees about isolation, concurrency, and memory safety.Rust also offers a clear performance model, making it easier to predict and reason about program efficiency. One important way it accomplishes this is by allowing fine-grained control over memory representations, with direct support for stack allocation and contiguous record storage. The language balances such controls with the absolute requirement for safety: Rust's type system and runtime guarantee the absence of data races, buffer overflows, stack overflows, and accesses to uninitialized or deallocated memory.},
+booktitle = {Proceedings of the 2014 ACM SIGAda Annual Conference on High Integrity Language Technology},
+pages = {103–104},
+numpages = {2},
+keywords = {rust, systems programming, affine type systems, memory management},
+location = {Portland, Oregon, USA},
+series = {HILT '14}
+}
+
+@article{reachability-paper,
+author = {Bao, Yuyan and Wei, Guannan and Bra\v{c}evac, Oliver and Jiang, Yuxuan and He, Qiyang and Rompf, Tiark},
+title = {Reachability Types: Tracking Aliasing and Separation in Higher-Order Functional Programs},
+year = {2021},
+issue_date = {October 2021},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {5},
+number = {OOPSLA},
+url = {https://doi.org/10.1145/3485516},
+doi = {10.1145/3485516},
+abstract = {Ownership type systems, based on the idea of enforcing unique access paths, have been primarily focused on objects and top-level classes. However, existing models do not as readily reflect the finer aspects of nested lexical scopes, capturing, or escaping closures in higher-order functional programming patterns, which are increasingly adopted even in mainstream object-oriented languages. We present a new type system, λ* , which enables expressive ownership-style reasoning across higher-order functions. It tracks sharing and separation through reachability sets, and layers additional mechanisms for selectively enforcing uniqueness on top of it. Based on reachability sets, we extend the type system with an expressive flow-sensitive effect system, which enables flavors of move semantics and ownership transfer. In addition, we present several case studies and extensions, including applications to capabilities for algebraic effects, one-shot continuations, and safe parallelization.},
+journal = {Proc. ACM Program. Lang.},
+month = {oct},
+articleno = {139},
+numpages = {32},
+keywords = {reachability types, aliasing, type systems, effect systems, ownership types}
+}
+
+
+@article{iDOT,
+author = {Kabir, Ifaz and Li, Yufeng and Lhot\'{a}k, Ond\v{r}ej},
+title = {iDOT: A DOT Calculus with Object Initialization},
+year = {2020},
+issue_date = {November 2020},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {4},
+number = {OOPSLA},
+url = {https://doi.org/10.1145/3428276},
+doi = {10.1145/3428276},
+abstract = {The Dependent Object Types (DOT) calculus serves as a foundation of the Scala programming language, with a machine-verified soundness proof. However, Scala's type system has been shown to be unsound due to null references, which are used as default values of fields of objects before they have been initialized. This paper proposes ιDOT, an extension of DOT for ensuring safe initialization of objects. DOT was previously extended to κDOT with the addition of mutable fields and constructors. To κDOT, ιDOT adds an initialization effect system that statically prevents the possibility of reading a null reference from an uninitialized object. To design ιDOT, we have reformulated the Freedom Before Commitment object initialization scheme in terms of disjoint subheaps to make it easier to formalize in an effect system and prove sound. Soundness of ιDOT depends on the interplay of three systems of rules: a type system close to that of DOT, an effect system to ensure definite assignment of fields in each constructor, and an initialization system that tracks the initialization status of objects in a stack of subheaps. We have proven the overall system sound and verified the soundness proof using the Coq proof assistant.},
+journal = {Proc. ACM Program. Lang.},
+month = {nov},
+articleno = {208},
+numpages = {28},
+keywords = {dependent objects, initialization, DOT, Scala, type safety}
+}
+
+@article{dot-paper,
+      title = {Dependent Object Types},
+      author = {Amin, Nada and Moors, Adriaan and Odersky, Martin},
+      year = {2012},
+      abstract = {We propose a new type-theoretic foundation of Scala and  languages like it: the Dependent Object Types (DOT)  calculus. DOT models Scala’s path-dependent types,  abstract type members and its mixture of nominal and  structural typing through the use of reﬁnement types. The  core formalism makes no attempt to model inheritance and  mixin composition. DOT normalizes Scala’s type system by  unifying the constructs for type members and by providing  classical intersection and union types which simplify  greatest lower bound and least upper bound computations. In  this paper, we present the DOT calculus, both formally and  informally. We also discuss our work-in-progress to prove  typesafety of the calculus.},
+      url = {http://infoscience.epfl.ch/record/183030},
+}
+
+
+BibTeX
+@article{10.1145/286942.286947,
+author = {Clarke, David G. and Potter, John M. and Noble, James},
+title = {Ownership Types for Flexible Alias Protection},
+year = {1998},
+issue_date = {Oct. 1998},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {33},
+number = {10},
+issn = {0362-1340},
+url = {https://doi.org/10.1145/286942.286947},
+doi = {10.1145/286942.286947},
+abstract = {Object-oriented programming languages allow inter-object aliasing. Although necessary to construct linked data structures and networks of interacting objects, aliasing is problematic in that an aggregate object's state can change via an alias to one of its components, without the aggregate being aware of any aliasing.Ownership types form a static type system that indicates object ownership. This provides a flexible mechanism to limit the visibility of object references and restrict access paths to objects, thus controlling a system's dynamic topology. The type system is shown to be sound, and the specific aliasing properties that a system's object graph satisfies are formulated and proven invariant for well-typed programs.},
+journal = {SIGPLAN Not.},
+month = {oct},
+pages = {48–64},
+numpages = {17},
+keywords = {sharing, programming language design, containment, alias protection, representation exposure, ownership}
+}
+
+
+@inproceedings{ownership-types,
+author = {Clarke, David G. and Potter, John M. and Noble, James},
+title = {Ownership Types for Flexible Alias Protection},
+year = {1998},
+isbn = {1581130058},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/286936.286947},
+doi = {10.1145/286936.286947},
+abstract = {Object-oriented programming languages allow inter-object aliasing. Although necessary to construct linked data structures and networks of interacting objects, aliasing is problematic in that an aggregate object's state can change via an alias to one of its components, without the aggregate being aware of any aliasing.Ownership types form a static type system that indicates object ownership. This provides a flexible mechanism to limit the visibility of object references and restrict access paths to objects, thus controlling a system's dynamic topology. The type system is shown to be sound, and the specific aliasing properties that a system's object graph satisfies are formulated and proven invariant for well-typed programs.},
+booktitle = {Proceedings of the 13th ACM SIGPLAN Conference on Object-Oriented Programming, Systems, Languages, and Applications},
+pages = {48–64},
+numpages = {17},
+keywords = {containment, ownership, programming language design, sharing, representation exposure, alias protection},
+location = {Vancouver, British Columbia, Canada},
+series = {OOPSLA '98}
+}
+
+@article{10.1145/2103621.2103722,
+author = {Naden, Karl and Bocchino, Robert and Aldrich, Jonathan and Bierhoff, Kevin},
+title = {A Type System for Borrowing Permissions},
+year = {2012},
+issue_date = {January 2012},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {47},
+number = {1},
+issn = {0362-1340},
+url = {https://doi.org/10.1145/2103621.2103722},
+doi = {10.1145/2103621.2103722},
+abstract = {In object-oriented programming, unique permissions to object references are useful for checking correctness properties such as consistency of typestate and noninterference of concurrency. To be usable, unique permissions must be borrowed --- for example, one must be able to read a unique reference out of a field, use it for something, and put it back. While one can null out the field and later reassign it, this paradigm is ungainly and requires unnecessary writes, potentially hurting cache performance. Therefore, in practice borrowing must occur in the type system, without requiring memory updates. Previous systems support borrowing with external alias analysis and/or explicit programmer management of fractional permissions. While these approaches are powerful, they are also awkward and difficult for programmers to understand. We present an integrated language and type system with unique, immutable, and shared permissions, together with new local permissions that say that a reference may not be stored to the heap. Our system also includes change permissions such as unique>>unique and unique>>none that describe how permissions flow in and out of method formal parameters. Together, these features support common patterns of borrowing, including borrowing multiple local permissions from a unique reference and recovering the unique reference when the local permissions go out of scope, without any explicit management of fractions in the source language. All accounting of fractional permissions is done by the type system "under the hood." We present the syntax and static and dynamic semantics of a formal core language and state soundness results. We also illustrate the utility and practicality of our design by using it to express several realistic examples.},
+journal = {SIGPLAN Not.},
+month = {jan},
+pages = {557–570},
+numpages = {14},
+keywords = {types, borrowing, uniqueness, immutability, permissions}
+}
+
+
+@inproceedings{borrowing,
+author = {Naden, Karl and Bocchino, Robert and Aldrich, Jonathan and Bierhoff, Kevin},
+title = {A Type System for Borrowing Permissions},
+year = {2012},
+isbn = {9781450310833},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2103656.2103722},
+doi = {10.1145/2103656.2103722},
+abstract = {In object-oriented programming, unique permissions to object references are useful for checking correctness properties such as consistency of typestate and noninterference of concurrency. To be usable, unique permissions must be borrowed --- for example, one must be able to read a unique reference out of a field, use it for something, and put it back. While one can null out the field and later reassign it, this paradigm is ungainly and requires unnecessary writes, potentially hurting cache performance. Therefore, in practice borrowing must occur in the type system, without requiring memory updates. Previous systems support borrowing with external alias analysis and/or explicit programmer management of fractional permissions. While these approaches are powerful, they are also awkward and difficult for programmers to understand. We present an integrated language and type system with unique, immutable, and shared permissions, together with new local permissions that say that a reference may not be stored to the heap. Our system also includes change permissions such as unique>>unique and unique>>none that describe how permissions flow in and out of method formal parameters. Together, these features support common patterns of borrowing, including borrowing multiple local permissions from a unique reference and recovering the unique reference when the local permissions go out of scope, without any explicit management of fractions in the source language. All accounting of fractional permissions is done by the type system "under the hood." We present the syntax and static and dynamic semantics of a formal core language and state soundness results. We also illustrate the utility and practicality of our design by using it to express several realistic examples.},
+booktitle = {Proceedings of the 39th Annual ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages},
+pages = {557–570},
+numpages = {14},
+keywords = {permissions, types, uniqueness, borrowing, immutability},
+location = {Philadelphia, PA, USA},
+series = {POPL '12}
+}
+
+@inproceedings{reynolds2002separation,
+  title={Separation logic: A logic for shared mutable data structures},
+  author={Reynolds, John C},
+  booktitle={Proceedings 17th Annual IEEE Symposium on Logic in Computer Science},
+  pages={55--74},
+  year={2002},
+  organization={IEEE}
+}
+
+@inproceedings{o2001local,
+  title={Local reasoning about programs that alter data structures},
+  author={O’Hearn, Peter and Reynolds, John and Yang, Hongseok},
+  booktitle={International Workshop on Computer Science Logic},
+  pages={1--19},
+  year={2001},
+  organization={Springer}
+}
+
+@article{separation-pearl,
+author = {Chargu\'{e}raud, Arthur},
+title = {Separation Logic for Sequential Programs (Functional Pearl)},
+year = {2020},
+issue_date = {August 2020},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {4},
+number = {ICFP},
+url = {https://doi.org/10.1145/3408998},
+doi = {10.1145/3408998},
+abstract = {This paper presents a simple mechanized formalization of Separation Logic for sequential programs. This formalization is aimed for teaching the ideas of Separation Logic, including its soundness proof and its recent enhancements. The formalization serves as support for a course that follows the style of the successful Software Foundations series, with all the statement and proofs formalized in Coq. This course only assumes basic knowledge of lambda-calculus, semantics and logics, and therefore should be accessible to a broad audience.},
+journal = {Proc. ACM Program. Lang.},
+month = {aug},
+articleno = {116},
+numpages = {34},
+keywords = {Coq, Program verification, Separation Logic}
+}
+

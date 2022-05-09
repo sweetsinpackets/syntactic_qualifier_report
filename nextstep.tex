@@ -1,0 +1,15 @@
+\section{Next Steps} \label{sec:next-step}
+
+The next focus will mainly on solving the problem of the distributive law (Section \ref{sec:distributive}), so that we can finish a proved type system first. Based on the possible solutions discussed in Section \ref{sec:discussion}, we will perform these steps in order:
+\begin{itemize}
+    \item Make attempt on the proof of the substitution lemma using different proof strategies, so that we might avoid the occurrence of the case requiring distributive law. Indeed, we should have confidence because there were many difficulties were solved by changing a proof strategy. 
+    \item Develop a set of context narrowing and weakening lemmas that allows us to drop these variables that must not appear in the ``evaluated qualifier''. However, from my experience, these kinds of lemmas will only take effect in some specialized cases, i.e. probably only in this case.
+    \item Research on the extension of equality. We should try our best to avoid introducing the extension of equality until last point, because it actually harms the aim of the axiomatic qualifier.
+\end{itemize}
+
+As long as we finalize the substitution lemma, the rest should be trivial. So the next step will includes:
+\begin{itemize}
+    \item Add bottom to the qualifier. With bottom introduced, we have to modify the definition of the qualifier, the sub-qualifier rules, and the equivalence rewrite. It might cause another round of reconstruction on all the proofs.
+    \item Support overlap. However, one remarkable advantage for using syntactic qualifier is that the overlap is naturally permitted due to the pre-defined rules.
+    \item Add self-references for function abstraction. This might requires redesign the interface of adding a value to the qualifier.
+\end{itemize}

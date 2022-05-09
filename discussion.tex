@@ -1,0 +1,35 @@
+\section{Discussion} \label{sec:discussion}
+
+When developing the syntactic qualifier, we discover several critical points worth further research. These points are the unsolved obstacles in the research on the syntactic qualifier, while we either avoid them or try to avoid them instead of solving these problems. Hence, further research one these points should definitely improve the system.
+
+\subsection{Sub-qualifier of Empty Problem} \label{sec:subqual-of-empty}
+In our design, the empty qualifier is the sub-qualifier of every qualifier, and in the contrary, if a qualifier is the sub-qualifier of an empty qualifier, then we expect the qualifier to be also the empty qualifier. However, the inverse is true but meaningless because the non-uniqueness of the empty qualifier and the existence of transitive rule. For example, by inverting \texttt{q <: qempty}, we can always apply the transitivity rule to get \texttt{q <: q' $\land$ q' <: qempty}, where the \texttt{q'} can be any qualifier equivalent to the empty qualifier. This, this turns the goal back to the initial point so we are unable to prove that.
+
+However, this problem won't harm the system, because we can always derive that the qualifier is equivalent to an empty qualifier and do rewrite. 
+
+\subsection{Distributive Law} \label{sec:distributive}
+At the first place, remark that our syntactic qualifier is based on the intersection and union types, i.e. a variant of set-theoretic types. The set-theoretic types are sound but incomplete. For example, we can't conclude that 
+\begin{lstlisting}
+(Int $\land$ Str) $\lor$ Bool $<:$ (Int $\lor$ Bool) $\land$ (Str $\lor$ Bool)
+\end{lstlisting}
+by simply selecting the left branch. Hence, we can never have a proof of distributive law for our syntactic qualifier.
+
+The only case that might need the distributive law is an interesting case. We want to show that
+\begin{lstlisting}
+    q $\land$ (q' $\lor$ (varF (length $\Gamma$))) $\equiv$ q $\land$ q'
+\end{lstlisting}
+, given the assumption that \texttt{q} is closed in the context \texttt{$\Gamma$}. We know it is true because \texttt{(varF (length $\Gamma$))} is out of the range of \texttt{q}, so it will be dropped because we intersect it with \texttt{q}. However, without the distributive law, we can't turn the expression to any cases where we can apply sub-qualifier rules
+locally to drop the value. 
+
+Luckily, we have a chance to avoid this issue since we don't actually need such as strong lemma. The reason why we can drop the value is because it is out of an ``active context'', so we might alternatively adopt a lemma saying that we're safe to drop any values out of the final approximated context.  
+
+\subsection{Adding Values, Self-References} 
+This is only a minor problem about the implementation details, not the design of the system. Currently, we adopt a very native method to ``add'' a variable to the syntactic qualifier by simply union the value, i.e. \texttt{v $\lor$ q}. By using this method, we will have to deal with a union at the top level each time we need to apply opening or substitution. This might add difficulty to the proof work because our equivalence rewrite is too weak to rewrite the sub-expressions.
+
+However, there seems no alternatives more reasonable than this one. If we want to generalize the \langstar type system by adding function references and self-references, this problem will cause dramatic waste of effort. Hence, though it's not important until now, we might need to redesign the interface in the future.
+
+\subsection{Extension of Equality}
+During the development of the syntactic qualifier, we have thought several times about extending the equivalence to equality to our system. Namely, we have tried to develop a set of equality rules allowing us to ``evaluate'' the qualifier. We want the extension of equality because the equivalence relation is quite weak that having an equivalence relation have only limited help to our proof (though at most cases it's enough). However, we have a lot of equivalence assumptions in the lemmas. With the equivalence only, the expressive power of the type system will be greater because the equivalence assumption is weaker.
+
+
+

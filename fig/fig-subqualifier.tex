@@ -1,0 +1,192 @@
+\begin{figure*}[t]
+\begin{mdframed}
+
+% \judgement{Qualifiers}{\fbox{$q_1 \sqsubseteq q_2$}\ \fbox{$q_1\sqcup q_2$}\ \fbox{$q_1\sqcap q_2$}\ \fbox{$q_1+ q_2$}}\\[1ex]
+% \judgement{Syntax}{\fbox{$ \{| l_1 ~|~ u_1 |\} ~(\sqsubseteq~|~\sqcup~|~\sqcap~|~+)~ \{| l_2 ~|~ u_2 |\}$}}\\[1ex]
+% \begin{minipage}[t]{.6\linewidth}
+% $
+% \begin{array}[t]{r@{\hspace{1ex}}c@{\hspace{1ex}}l}
+%   q &:=& \bot \mid l\mydots u \\[\myskip]
+%   \multicolumn{3}{l}{q_1\sqsubseteq q_2 \Leftrightarrow q_1  =  \bot \vee (l_2 \subseteq l_1 \wedge u_1\subseteq u_2)}\\[\myskip]
+%  \multicolumn{3}{l}{\sqcup,\sqcap := \text{join and meet from $\sqsubseteq$}} \\[\myskip]
+%  \multicolumn{3}{l}{\intv{\Gamma}{l}{u} := \inset{x:\intv{T}{l^\prime}{u^\prime+x} \in \Gamma \mid l\subseteq l^\prime,~u^\prime + x \subseteq u }} \\[\myskip]
+%  \multicolumn{3}{l}{\qual{T_1}{q_1} \SUBTYPE \qual{T_2}{q_2} := T_1\SUBTYPE T_2\; \wedge\; l_2 \sqsubseteq l_1 \;\wedge\; u_1\sqsubseteq u_2} \\[\myskip]
+% \end{array}
+% $
+% \end{minipage}%
+
+\judgement{Sub-qualifier Rules}{}\\[1ex]
+  \vspace{-0.5em}
+\begin{mathpar}
+\mprset{center}
+    \inferrule*[right=S-empty]{
+    %   c \in B
+    }{
+      \Gamma \vdash \text{empty} \sqsubseteq q
+    }
+    \and
+    \inferrule*[right=S-refl]{
+    }{
+      \Gamma \vdash q \sqsubseteq q
+    }    
+    \and
+    \inferrule*[right=S-Union-Up-L]{
+      \Gamma\vdash q_1 \sqsubseteq q_2
+    }{
+      \Gamma\vdash q_1 \sqsubseteq (q_2 \lor q_3)
+    }
+    \and
+    \inferrule*[right=S-Union-Up-R]{
+      \Gamma\vdash q_1 \sqsubseteq q_2 
+    }{
+      \Gamma\vdash q_1 \sqsubseteq (q_3 \lor q_2)
+    }
+    \and
+    \inferrule*[right=S-Union-Low]{
+      \Gamma\vdash q_1 \sqsubseteq q_3\\
+      \Gamma\vdash q_2 \sqsubseteq q_3
+    }{
+      \Gamma\vdash (q_1 \lor q_2) \sqsubseteq q_3
+    }
+    \and
+    \inferrule*[right=S-Inter-Low-L]{
+      \Gamma\vdash q_1 \sqsubseteq q_2
+    }{
+      \Gamma\vdash (q_1 \land q_3) \sqsubseteq q_2
+    }
+    \and
+    \inferrule*[right=S-Inter-Low-R]{
+      \Gamma\vdash q_1 \sqsubseteq q_2
+    }{
+      \Gamma\vdash (q_3 \land q_1) \sqsubseteq q_2
+    }
+    \and
+    \inferrule*[right=S-Inter-Up]{
+      \Gamma\vdash q_1 \sqsubseteq q_2 \\
+      \Gamma\vdash q_1 \sqsubseteq q_3
+    }{
+      \Gamma \vdash q_1 \sqsubseteq (q_2 \land q_3)
+    }
+    \and 
+    \inferrule*[right=S-trans]{
+      \Gamma\vdash q_1 \sqsubseteq q_2 \\
+      \Gamma\vdash q_2 \sqsubseteq q_3
+    }{
+      \Gamma \vdash q_1 \sqsubseteq q_3
+    }    
+
+    % \inferrule*[right=T-ref-$\alpha$]{
+    %   \Gamma\vdash t : T^\alpha / \epsilon \translates{X[x_1]}
+    % }{
+    %   \Gamma\vdash \keyw{ref}\; t : (\Typ{Ref}\;T^\varnothing)^\varnothing / \epsilon \rhd \{ (\alpha^*, \eff{kill} ) \} \translates{X[\Let{x_2}{\keyw{ref}\;x_1}{x_2}]}
+    % }
+    % \and
+
+
+    % \and
+    % \inferrule*[lab=T-swap]{
+    %   \Gamma\vdash t_1 : (\Typ{Ref}^\varnothing)^\alpha /\epsilon_1\translates{X_1[x_1]} \\ \Gamma\vdash t_2 : T^q /\epsilon_2\translates{X_2[x_2]}\\ q^* \cap \alpha^* = \varnothing
+    % }{
+    %   \Gamma\vdash \keyw{swap}\;t_1\;t_2 : T^\varnothing /\epsilon_1\rhd \epsilon_2 \rhd \{ (q^*,\eff{kill}), (\alpha^*,\eff{wr}) \}\translates{X_1[X_2[\Let{x_3}{\keyw{swap}\;x_1\;x_2}{x_3}]]}
+    % }
+    % \and
+    % \inferrule*[right=T-move]{
+    %   \Gamma\vdash t : T^q/\epsilon\translates{X[x_1]}
+    % }{
+    %   \Gamma\vdash \keyw{move}\;t : T^{q-q}/\epsilon\rhd\{q^*,\eff{kill}\}\translates{X[\Let{x_2}{\keyw{move}\;x_1}{x_2}]}
+    % }
+
+  \end{mathpar}
+
+
+% \judgement{Subtyping Rules}{\fbox{$\Gamma \vdash \intv{T_1}{l_1}{u_1} \SUBTYPE \intv{T_2}{l_2}{u_2}$}}\\[1ex]
+%   \vspace{-0.5em}
+% \begin{mathpar}
+% \mprset{center}
+%     \inferrule*[right=S-base]{
+%       \Intv{l_1}{u_1} \SUBTYPE \Intv{l_2}{u_2}
+%     }{
+%       \Gamma \vdash \intv{B}{l_1}{u_1} \SUBTYPE \intv{B}{l_2}{u_2}
+%     }
+%     \and
+%     \inferrule*[right=S-REF]{
+%         \Gamma \vdash \Intv{l_1}{u_1}\SUBTYPE \Intv{l_2}{u_2} \\
+%         \Gamma \vdash \qual{T_1}{\bot} \SUBTYPE \qual{T_2}{\bot} \\
+%         \Gamma \vdash \qual{T_2}{\bot} \SUBTYPE \qual{T_1}{\bot} 
+%     }{
+%         \Gamma \vdash \intv{\left(\Typ{Ref}\;T_1\right)}{l_1}{u_1} \SUBTYPE \intv{\left(\Typ{Ref}\;T_2\right)}{l_2}{u_2}
+%     }
+%     \and
+%     % \inferrule*[right=S-FUN]{
+%     %     \Gamma \vdash q_5 \SUBTYPE q_6 \\
+%     %     \Gamma \vdash \qual{T_3}{q_3}\SUBTYPE \qual{T_1}{q_1} \\\\
+%     %     \Gamma\;,\;f:\intv{\left(\,f\left(\,x:\qual{T_1}{q_1}\,\right) \to \qual{T_2}{q_2} \,  \right)}{l_5}{u_5+f} \;,\; x:\intv{T_3}{l_3}{u_3+x} \vdash \qual{T_2}{q_2} \SUBTYPE \qual{T_4}{q_4}
+%     % }{
+%     %     \Gamma \vdash \qual{\left(\,f\left(\, x: \qual{T_1}{q_1}\,\right) \to \qual{T_2}{q_2}\,\right)}{q_5} \SUBTYPE \qual{\left(\,f\left(\, x: \qual{T_3}{q_3}\,\right) \to \qual{T_4}{q_4}\,\right)}{q_6}
+%     % }
+%     \inferrule*[right=S-FUN]{
+%         \Gamma \vdash \Intv{l_5}{u_5} \SUBTYPE \Intv{l_6}{u_6} \\
+%         \Gamma \vdash \intv{T_3}{l_3}{u_3} \SUBTYPE \intv{T_1}{l_1}{u_1} \\\\
+%         \Gamma\;,\;f:\intv{\left(\,f\left(\,x:\intv{T_1}{l_1}{u_1}\,\right) \to \intv{T_2}{l_2}{u_2} \,  \right)}{l_5}{u_5+f} \;,\; x:\intv{T_3}{l_3}{u_3+x} \vdash \intv{T_2}{l_2}{u_2} \SUBTYPE \intv{T_4}{l_4}{u_4}
+%     }{
+%         \Gamma \vdash \intv{\left(\,f\left(\, x: \intv{T_1}{l_1}{u_1}\,\right) \to \intv{T_2}{l_2}{u_2}\,\right)}{l_5}{u_5} \SUBTYPE \intv{\left(\,f\left(\, x: \intv{T_3}{l_3}{u_3} \,\right) \to \intv{T_4}{q_4}{u_4} \,\right)}{l_6}{u_6}
+%     }
+%   \end{mathpar}  
+%   \judgement{qqualifiers}{\fbox{$q_1\sqsubseteq q_2$}\ \fbox{$q_1\sqcup q_2$}\ \fbox{$q_1\sqcap q_2$}\ \fbox{$q_1+ q_2$}}\\[1ex]
+% \begin{minipage}[t]{.6\linewidth}
+% $
+% \begin{array}[t]{r@{\hspace{1ex}}c@{\hspace{1ex}}l}
+%   q_1\sqsubseteq q_2 \Leftrightarrow q_1 & = & \bot \vee q_1\subseteq q_2\\[\myskip]
+% \multicolumn{3}{l}{\sqcup,\sqcap := \text{join and meet from $\sqsubseteq$}}
+% \end{array}
+% $
+% \end{minipage}%
+% \begin{minipage}[t]{.3\linewidth}
+% $
+% \begin{array}[t]{r@{\hspace{1ex}}c@{\hspace{1ex}}l}
+%   \bot + x &=&\bot  \\[\myskip]
+%   \alpha + x &=& \alpha \cup \{x\}\ \text{if}\ x\notin \alpha
+% \end{array}
+% $
+% \end{minipage}\\[1ex]
+% \judgement{Context Restriction $\qquad\ \,\, \Gamma^{\,q} := \left\{x:T^{\,q_2+x} \in \Gamma\mid q_2+x \sqsubseteq q_1\right\}$}{}\\[1ex]
+% % \vspace{-5pt}
+% %   $$\Gamma^{\,q} := \left\{x:T^{\,q_2+x} \in \Gamma\mid q_2+x \sqsubseteq q_1\right\}$$
+%   % \begin{mathpar}
+%   %   \inferrule*{}{\varnothing^{\,q} = \varnothing}\and
+%   %   \inferrule*{\Gamma^{\,q_1} = \Gamma'\\q_2+x \sqsubseteq q_1}{(\Gamma,x:T^{\,q_2+x})^{\,q} = \Gamma', x:T^{\,q_2+x}}\and
+%   %   \inferrule*{\Gamma^{\,q_1} = \Gamma'\\ q_2+x \not\sqsubseteq q_1}{(\Gamma,x:T^{\,q_2+x})^{\,q_1} = \Gamma'}\and
+%   %   \inferrule*{}{\bot\sqsubseteq q}\and
+%   %   \inferrule*{\alpha\subseteq\beta}{\alpha\sqsubseteq \beta}
+%   % \end{mathpar}
+%   \judgement{Effect Composition}{\fbox{$\epsilon_1 \rhd \epsilon_2$}\ \fbox{$\EFF_1 \rhd \EFF_2$}}\\[1ex]
+% \begin{minipage}[t]{.7\linewidth}
+% $
+% \begin{array}[t]{r@{\hspace{1ex}}c@{\hspace{1ex}}l}
+%   \epsilon\rhd\varnothing & = & \epsilon   \\[\myskip]
+%   \Map{\alpha_1 : \EFF_1\,,\, \epsilon_1}\rhd\Map{\alpha_2 : \EFF_2\,,\, \epsilon_2}& = &\Map{(\alpha_1\cup\alpha_2 : \EFF_1\rhd\EFF_2)\,,\, \epsilon_1}\rhd\epsilon_2, \\[\myskip]
+%   & & \quad\text{where}\ \alpha_1\cap \alpha_2\neq \emptyset\\[\myskip]
+%   \Map{\Seq{\alpha_1 : \EFF_1}}\rhd\Map{\alpha_2 : \EFF_2\,,\, \epsilon_2}& = & \Map{\Seq{\alpha_1 : \EFF_1}\,,\,\alpha_2:\EFF_2 }\rhd\epsilon_2, \\[\myskip]
+%   & & \quad\text{where}\ \Seq{\alpha_1}\cap \alpha_2= \emptyset\\[\myskip]
+% \end{array}
+% $
+% \end{minipage}%
+% \begin{minipage}[t]{.3\linewidth}
+% $
+% \begin{array}[t]{r@{\hspace{1ex}}c@{\hspace{1ex}}l}
+%   \qquad\etop\rhd \EFF &=&\etop  \\[\myskip]
+%   \qquad\ebot\rhd \EFF &=& \EFF
+% \end{array}
+% $
+% \end{minipage}
+% \begin{mathpar}
+  %   \inferrule{\alpha_1\cap \alpha_2\neq \emptyset}{\Map{\alpha_1 : \EFF_1\,,\, \epsilon_1}\rhd\Map{\alpha_2 : \EFF_2\,,\, \epsilon_2} = \Map{(\alpha_1\cup\alpha_2 : \EFF_1\rhd\EFF_2)\,,\, \epsilon_1}\rhd\epsilon_2}\and
+  %   \inferrule{\Seq{\alpha_1}\cap \alpha_2= \emptyset}{\Map{\Seq{\alpha_1 : \EFF_1}}\rhd\Map{\alpha_2 : \EFF_2\,,\, \epsilon_2} = \Map{\Seq{\alpha_1 : \EFF_1}\,,\,\alpha_2:\EFF_2 }\rhd\epsilon_2}\and
+  %   \inferrule{\ }{\epsilon\rhd\varnothing = \epsilon}\and
+  %   \inferrule{\ }{\etop\rhd \EFF = \etop}\and
+  %   \inferrule{\ }{\ebot\rhd \EFF = \EFF}
+  % \end{mathpar}
+  \caption{Sub-qualifier rules for the syntactic qualifier.}\label{fig:subqualifier}
+\end{mdframed}
+% \vspace{-2em}
+\end{figure*}

@@ -1,0 +1,277 @@
+\usetikzlibrary{arrows}
+
+\makeatletter % allow us to mention @-commands
+\def\arcr{\@arraycr}
+\makeatother
+
+%%----------------------------
+% macro to try to fix the bibliography problems, but this doesn't work...
+%\def\showDOI#1{\mbox{{\tt DOI:}{#1}}}
+\newcommand{\showDOI}[1]{\unskip}
+%%----------------------------
+
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+	\newenvironment{#1}[1]
+	{%
+		\renewcommand\customgenericname{#2}%
+		\renewcommand\theinnercustomgeneric{##1}%
+		\innercustomgeneric
+	}
+	{\endinnercustomgeneric}
+}
+\newcustomtheorem{re-definition}{Definition}
+\newcustomtheorem{re-lemma}{Lemma}
+
+
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\secref}[1]{Sec.~\ref{#1}} % uses varioref
+\newcommand{\thmref}[1]{Theorem~\ref{#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{#1}}
+\newcommand{\colref}[1]{Corollary~\ref{#1}}
+\newcommand{\defref}[1]{Def.~\ref{#1}}
+\newcommand{\appref}[1]{Appendix~\ref{#1}}
+\newcommand{\tbref}[1]{Table~\ref{#1}}
+
+\newcommand{\deps}{\textit{deps}}
+%\newcommand{\befs}[1]{\ensuremath{\xrightarrow[#1]{\textit{efb}}}}
+\newcommand{\efsb}{\ensuremath{\mapsto}}
+\newcommand{\dvdash}[1]{\ensuremath{\vdash_{#1}}}
+\newcommand{\SUBTYPE}{\ensuremath{\mathrel{<:}}}
+\newcommand{\SUBEFF}{\ensuremath{\leq_{e}}}
+\newcommand{\dyn}{\textit{dyn}}
+\newcommand{\bdv}{\textit{bdv}}
+\newcommand{\body}{\textit{body}}
+\newcommand{\fv}{\textit{FV}}
+\newcommand{\dreduces}{\ensuremath{\iff}}
+\newcommand{\preduces}{\ensuremath{\implies}}
+\newcommand{\mpreduces}{\ensuremath{\implies\!\!\!\!^*}}
+\newcommand{\mreduces}{\ensuremath{\rightarrow^*}}
+\newcommand{\nf}{\textit{nf}}
+\newcommand{\dplus}{\ensuremath{\uplus}}
+\newcommand{\vars}{\textit{Vars}}
+\newcommand{\first}{\textit{first}}
+\newcommand{\rest}{\textit{rest}}
+\newcommand{\last}{\textit{last}}
+\newcommand{\occ}{\textit{Occ}}
+\newcommand{\stdout}{\textit{stdout}}
+\newcommand{\erase}{\textit{erase}}
+
+% Theorems
+%\newcommand{\PROOF}{\topsep 0pt \partopsep 0pt{\em Proof:\/}~~}
+\newcommand{\QED}{\rule{0.4em}{0.65em}}
+
+\newcommand{\Specsharp}{%
+	{\settoheight{\dimen0}{C}Spec\kern-.05em \resizebox{!}{\dimen0}{\raisebox{\depth}{\#}}}}
+\newcommand{\Csharp}{%
+	{\settoheight{\dimen0}{C}C\kern-.05em \resizebox{!}{\dimen0}{\raisebox{\depth}{\#}}}}
+
+% type setting for syntax
+\newcommand{\nonterm}[1]{\textrm{\textit{#1}}}
+\newcommand{\KW}[1]{\textsf{#1}}
+\newcommand{\fun}[1]{\operatorname{#1}}
+\newcommand{\DOM}{\fun{dom}}
+\newcommand{\CODOM}{\fun{codom}}
+
+\newenvironment{nscenter}
+{\parskip=0pt\par\nopagebreak\centering}
+{\par\noindent\ignorespacesafterend}
+
+\definecolor{blue-violet}{rgb}{0.54, 0.17, 0.89}
+\definecolor{ccomment}{HTML}{006400}
+\definecolor{depmap}{HTML}{00007B}
+% ----- listings
+\lstdefinelanguage{Scala}%
+{morekeywords={abstract,%
+    case,catch,char,class,%
+    def,else,extends,final,finally,for,%
+    if,import,implicit,%
+    match,module,%
+    new,null,%
+    object,override,%
+    package,private,protected,public,%
+    for,public,return,super,%
+    this,throw,trait,try,type,%
+    val,var,%
+    with,while,%
+    yield,%
+    let, end, @track,%
+    ref, Int, Ref, move, swap,%
+    println%
+  },%
+  numbers=none, %
+  mathescape=true,%
+  sensitive,%
+  commentstyle=\color{depmap},
+  moredelim=**[is][\color{red}]{<}{>},%
+  morecomment=[l]//,%
+  morecomment=[l]/,%
+  morecomment=[s][\color{ccomment}]{/*}{*/},%
+  %morecomment=[s][\color{blue-violet}\bfseries]{@}{\, },%
+  morestring=[b]",%
+  morestring=[b]',%
+  showstringspaces=false%,
+}[keywords,comments,strings]%
+\def\inline{\lstinline[basicstyle=\small]}
+
+\lstset{
+  backgroundcolor = \color{white},
+  language=Scala,
+  basicstyle=\footnotesize\ttfamily,
+  % moredelim=**[is][\color{blue}]{@}{@},
+  % basewidth={0.5em, 0.40em},%
+  aboveskip=2pt,%\smallskipamount,
+  belowskip=2pt,%\negsmallskipamount,
+  lineskip=-2pt,
+  numbers=none,
+  mathescape=true,
+  commentstyle=\color{depmap},
+  morekeywords={let, in, @track, ref, Int, Ref, move, swap, @rd, @wr, @kill},%
+  escapechar={|},
+  %    keywordstyle=\color{blue-violet}\bfseries,
+  literate={≠}{@}1%
+  {←}{{$\leftarrow$}}2
+  {↦}{{$\mapsto$}}2
+  {ₕ}{{$_h$}}1
+  {ₛ}{{$_s$}}1
+  % {⇓}{{\raisebox{0.5pt}{$\Downarrow$}}}1
+  % {↓}{{\raisebox{0.5pt}{$\downarrow$}}}1
+  % {∈}{{\raisebox{0.5pt}{$\scriptscriptstyle\in$}}}1
+  % {λ}{{{$\lambda$}}}1
+}
+\def\inline{\lstinline[basicstyle=\footnotesize\ttfamily]}
+
+% inline source code style
+\newcommand{\code}[1]{\lstinline[basicstyle=\footnotesize\ttfamily] {#1}\xspace}
+
+%\lstset{escapeinside={<<}{>>}}
+\lstset{escapechar={|}}
+
+\newcommand{\note}[1]{{\color{red}[#1]}}
+\newcommand{\todo}[1]{\note{TODO: #1}}
+\newcommand{\rev}[1]{\note{Revision: #1}}
+\newcommand{\q}[1]{\note{Question: #1}}
+
+% \newcommand{\note}[1]{}
+% \newcommand{\todo}[1]{}
+% \newcommand{\rev}[1]{}
+% \newcommand{\q}[1]{}
+
+\newcommand{\fr}{\textsf{fr}}
+\renewcommand{\wr}{\textsf{wr}\xspace}
+\newcommand{\rd}{\textsf{rd}\xspace}
+\newcommand{\nrd}{\textsf{nrd}\xspace}
+\newcommand{\Erw}{\ensuremath{\mathbb{E}_\mathit{rw}}}
+\renewcommand{\kill}{\textsf{kill}}
+\renewcommand{\Ref}{\text{Ref}}
+
+\newcommand{\lang}{\ensuremath{\lambda^*_{\rightarrow}}\xspace}
+\newcommand{\langstar}{\ensuremath{\lambda^*}\xspace}
+\newcommand{\langg}{\ensuremath{\lambda^*_{\mathsf{G}}\xspace}}
+\newcommand{\langa}{\ensuremath{\lambda^*_{\mathsf{anf}}\xspace}}
+
+
+\newcommand{\tr}[1]{\ensuremath{\llbracket #1 \rrbracket}}
+
+%keywords
+\newcommand{\keyw}[1]{\textsf{\textbf{#1}}\xspace}
+
+\def\Var#1#2#3{\keyw{var}\ {#1} = {#2}\ \keyw{in}\ {#3}}
+\def\Let#1#2#3{\keyw{let}\ {#1} = {#2}\ \keyw{in}\ {#3}}
+\def\Letg#1#2{\keyw{let}\ {#1} = {#2}}
+\def\If#1#2#3{\keyw{if}\ ({#1})\ {#2}\ \keyw{else}\ {#3}}
+
+%types
+\newcommand{\Typ}[1]{\textsf{#1}\xspace}
+
+% effect, e.g. rd, wr, kill
+\newcommand{\eff}[1]{\textsf{#1}\xspace}
+
+\newcommand{\etop}{\ensuremath{\boldsymbol{\top}}}
+\newcommand{\ebot}{\ensuremath{\boldsymbol{\bot}}}
+
+%metavar for effect labels
+\newcommand{\EFF}{\ensuremath{\mathfrak{e}}}
+
+%inference rule label style
+\newcommand{\inflabel}[1]{(\textsc{\MakeLowercase{#1}})}
+
+% highlight color
+\newcommand{\blue}[1]{{\color{ACMBlue}#1}}
+\newcommand{\darkblue}[1]{{\color{blue}#1}}
+\newcommand{\brown}[1]{{\color{brown}#1}}
+\newcommand{\teal}[1]{{\color{teal}#1}}
+\newcommand{\violet}[1]{{\color{violet}#1}}
+\newcommand{\black}[1]{{\color{black}#1}}
+\newcommand{\purple}[1]{{\color{purple}#1}}
+%highlight a dependency map
+\newcommand{\dep}[1]{{\color{depmap}#1}}
+% a muted color for background noise
+\colorlet{mute}{teal}
+\newcommand{\mute}[1]{{\color{mute}#1}}
+
+\definecolor{light-gray}{gray}{0.92}
+\definecolor{dark-gray}{gray}{0.5}
+\newcommand{\highlight}[2][light-gray]{\mathchoice%
+  {\colorbox{#1}{$\displaystyle#2$}}%
+  {\colorbox{#1}{$\textstyle#2$}}%
+  {\colorbox{#1}{$\scriptstyle#2$}}%
+  {\colorbox{#1}{$\scriptscriptstyle#2$}}}%
+
+% translation
+\newcommand{\yields}[2][mute]{\ensuremath{{\color{#1}\ \leadsto #2}}}
+\newcommand{\yieldss}[3][mute]{\ensuremath{{\color{#1}\ \leadsto_{#2} #3}}}
+
+% anf
+\newcommand{\anf}{\ensuremath{\mathsf{anf}}}
+
+% annotation
+\newcommand{\trackset}[1]{^{\texttt{\{#1\}}}}
+\newcommand{\track}[0]{^{\emptyset}}
+\newcommand{\tracksetl}[1]{^{\tt{\{#1\}}}}
+\newcommand{\tracksetc}[1]{^{\color{ccomment}{\texttt{\{#1\}}}}}
+\newcommand{\trackl}[0]{^{\color{blue}{\emptyset}}}
+\newcommand{\arrowl}[0]{\color{blue}{\longrightarrow}}
+\newcommand{\substvar}[1]{\color{dark-gray}{\tt{#1}}}
+\newcommand{\remapvar}[1]{\color{red}{\tt{#1}}}
+\newcommand{\remapvardown}[1]{\color{violet}{\tt{#1}}}
+
+% contexts and plugging a hole
+\newcommand{\hole}[1]{\ensuremath{[\,#1\,]}}
+\newcommand{\CX}[3][black]{\ensuremath{{\color{#1}#2\hole{#3}}}}
+\newcommand{\binds}[1]{\ensuremath{\{\,#1\,\}}}
+
+% (disjoint) merge (of maps)
+\newcommand{\mmerge}{\ensuremath{\uplus}}
+\newcommand{\MMERGE}{\ensuremath{\biguplus}}
+
+% partial function space
+\newcommand{\pto}{\ensuremath{\rightharpoonup}}
+
+% sequence of things
+\newcommand{\Seq}[1]{\ensuremath{\overline{#1}}}
+
+% a record, map, partial function, whatever
+\newcommand{\Map}[1]{\ensuremath{\{\,#1\,\}}}
+
+% fv in soft and hard dependee
+\newcommand{\FV}{\fun{FV}}
+\newcommand{\FHD}{\fun{FHD}}
+\newcommand{\FSD}{\fun{FSD}}
+\newcommand{\FD}{\fun{FD}}
+\newcommand{\BV}{\fun{BV}}
+
+\newcommand{\bfparagraph}[1]{\paragraph{\textbf{#1}}}
+
+% cbv reduction notion
+\newcommand{\redv}{\ensuremath{\mathrel{\to_\mathbf{v}}}}
+\newcommand{\rredv}{\ensuremath{\mathrel{\twoheadrightarrow_\mathbf{v}}}}
+% rewriting
+\newcommand{\redr}{\ensuremath{\mathrel{\to_\mathbf{r}}}}
+\newcommand{\rredr}{\ensuremath{\mathrel{\twoheadrightarrow_\mathbf{r}}}}
+%both
+\newcommand{\redvr}{\ensuremath{\mathrel{\to_\mathbf{v,r}}}}
+\newcommand{\rredvr}{\ensuremath{\mathrel{\twoheadrightarrow_\mathbf{v,r}}}}

@@ -1,0 +1,85 @@
+\section{Overview of Syntactic Qualifiers} \label{sec:overview}
+
+The core of our syntactic qualifier is a set of axiomatic rules on the sub-qualifier relation, so almost all properties of qualifiers are constructed from the sub-qualifier relation in our syntactic design. 
+
+\subsection{Qualifier Definition}
+
+Since the syntactic qualifier is based on the idea of intersection and union types, we reflect the intersection and union with \texttt{qand} and \texttt{qor} constructors in the qualifier definition. Meanwhile, like the set qualifier system, we reflect the de Bruijn variable and the location with \texttt{qvar} and \texttt{qloc} constructors. 
+
+By these constructors, we can build a tree structure to represent the qualifiers with the set format. For example, a qualifier containing \texttt{[varF 1, varB 2, loc 3]} can be intuitively represented as 
+\begin{lstlisting}
+     qor ((qvar (varF 1)) (qor (qvar (varB 2)) (qloc 3)))
+\end{lstlisting}
+
+Note that the \texttt{qor} and \texttt{qand} constructors have only syntactic meaning, where the meaning from the intersection and union types are achieved by the sub-qualifier relations.
+
+One potential problem caused by this syntactic definition is that we can have various different syntactic tree representation for a same qualifier. As a trivial example, two syntactic qualifiers \texttt{(qor empty q)} and \texttt{q} reflects the same qualifier in set implementation, but different in syntactic implementation because the constructors have no actual meaning. We solve this problem by proving the equivalence, which will be discussed later.
+
+
+\subsection{Sub-qualifier Relations}
+
+In our syntactic qualifier system, the sub-qualifier relations follow the subtyping relation of the intersection and union types, i.e. our sub-qualifier rules are one-to-one reflection of the subtyping rules in the intersection and union rules. 
+
+% TODO: here is a figure of the rules mapping
+% \input{fig/fig-subqualifier}
+
+The subqualifier rules in our system can be divided into two parts: reflexivity of the values and the combination rules of two qualifiers derived from intersection and union types. For the reflexivity of values, these are the simple rules indicating that a qualifier having only a value is the sub-qualifier of itself, so we skip them here. The combination rules allow reasoning the sub-qualifier relation of the \texttt{qand} and \texttt{qor} constructors, with which we can extend the sub-qualifier relation to complex syntactic trees. The sub-qualifier rules are summerized in Fig. \ref{fig:subqualifier}.
+\input{fig/fig-subqualifier}
+
+The interesting part is the relation between our combination sub-qualifier rules and the subtyping in the intersection and union types. An intuitive explanation for this is that a value in a qualifier can be viewed as a term having a type, so the sub-qualifier relation can naturally be viewed as the subtyping relation. For example in the \texttt{qstp\_sub\_or} case,
+\begin{lstlisting}
+    $|$ qstp_sub_or : $\forall$ $\Gamma$ $\Sigma$ q1 q2 q3,
+        qstp $\Gamma$ $\Sigma$ q1 q3 ->
+        qstp $\Gamma$ $\Sigma$ q2 q3 ->
+        qstp $\Gamma$ $\Sigma$ (qor q1 q2) q3
+\end{lstlisting}
+which corresponds to the \texttt{union-low} subtyping rule, 
+\begin{mathpar}
+    \inferrule*[right=union-low]{
+      q_1 <: q_3\,,\,\, q_2 <: q_3
+    }{
+      (q_1 \lor q_2) <: q_3 %\translates{\Let{x}{c/\varnothing}{x/\varnothing}}
+    }
+\end{mathpar}
+This rule means that if we know a a value is in either qualifier \texttt{$q_1$} or \texttt{$q_2$}, then we know that it is definitely in the union of two qualifiers, which is similar to the combination use of subsumption rule and union-low subtyping rule in the union type system. The other rules can be explained similarly, so that we borrow the full intersection and union type system.
+
+\subsection{Transitivity}
+
+Besides the necessary rules to construct the sub-qualifier relation, we add an additional rule of transitivity as an axiom to the system. 
+\begin{lstlisting}
+  $|$ qstp_trans : $\forall$ ($\Gamma$ $\Sigma$ q1 q2 q3), 
+      qstp $\Gamma$ $\Sigma$ q1 q2 -> qstp $\Gamma$ $\Sigma$ q2 q3 ->
+      qstp $\Gamma$ $\Sigma$ q1 q3
+\end{lstlisting}
+
+Transitivity law is not an axiomatic rule which must be included for the system, in other word, the transitivity law should be provable with other rules. However, proving transitivity law is obviously hard and requires much efforts. Meanwhile, the transitivity property of the qualifier is not the focus on the work, so we temporarily add the rule as an axiom and proceeds to the \langstar system. 
+
+This rule is widely used in the type safety proof of the \langstar system. One remarkable application is to rewrite a sub-qualifier relation with an equivalent expression.
+
+\subsection{Equivalence}
+
+Equivalence is an important strategy in the proof of sub-qualifier related lemmas. Namely, showing an equivalence relation allows us to simplifying a syntactic qualifier tree and rewrite sub-qualifier goals with an equivalent expression. 
+
+In the set qualifier, we are free to use the equality because the each qualifier has a unique expression in set qualifiers. However, recap that the syntactic qualifiers are not unique while have infinite tree structure for a same meaning, so restricting two qualifiers are strictly equal is meaningless. Hence, equivalence is meaningful in the syntactic qualifier system instead of equality. Without equality, we are unable to directly replace or rewrite expressions as convenient as in the set system, which sometimes prevents the proof from progressing. For this reason, we have to select a definition for ``equivalence'' and construct a rewrite strategy based on the equivalence.
+
+We define the equivalence in our system as the bi-directional sub-qualifier relation, i.e.
+\begin{lstlisting}
+    Inductive eqqual $\Gamma$ $\Sigma$ q1 q2 : Prop :=
+    $|$ eqq:  qstp $\Gamma$ $\Sigma$ q1 q2 -> qstp $\Gamma$ $\Sigma$ q2 q1 ->
+        eqqual $\Gamma$ $\Sigma$ q1 q2
+\end{lstlisting}
+This definition for equivalence is nature because our system is based on the axiomatic sub-qualifier rules, so it would be better to rely on the sub-qualifier relationship. Likewise, the equality relation in sets with only set inclusion is also defined as the bi-directional set inclusion. The bi-directional sub-qualifier equivalence works in our system intuitively because the sub-qualifier relation has some extent of order, i.e. we don't allow the cyclic sub-qualifier relation or the asymmetry. (However, there is a potential problem that we can't prove only an empty qualifier can be the sub-qualifier of an empty qualifier, see \ref{sec:subqual-of-empty}.)
+
+With the equivalence and the transitivity rule, we can develop a rewrite strategy for equivalence expressions in the sub-qualifier judgement. To rewrite, we just need to apply the transitivity rule on a side of sub-qualifier relations in the equivalence, while in one direction in assumptions and the other direction in the goals. The equivalence is a stronger precondition than necessary to do the rewrite, and we adopt this strategy because it's more close to the original proof tree.
+
+
+\subsection{Opening and Substituting}
+
+The opening and substitution operation are two main operations performed on qualifiers. In our system, the two operations are defined as normal functions. The two functions will recursively traverse the syntactic tree to find the variable to substitute or open and recursively do the replacement. 
+
+Note that in the syntactic qualifier system, a value might occur multiple times in the tree structure, for example,
+\begin{lstlisting}
+    qor ((qloc 1) (qand (qloc 1) (qloc 1)))
+\end{lstlisting}
+is a possible qualifier tree. To handle these conditions, we simply replace every appearance of the target value without simplifying or evaluating the intersection and union constructors.
+
